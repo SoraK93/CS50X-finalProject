@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block header %}
+<div class="container-fluid h-75 object-fit-contain text-center border rounded" id="home-bg">
+    <div class="home-header-bg container-fluid h-100"></div>
+    <div class="container position-absolute top-50 start-50 translate-middle home-header-text">
+        <h1 class="fs-1">Welcome</h1>
+        <p class="col-lg-8 mx-auto lead font-monospace">Share your experience of CS50.</p>
+        <div class=" container mx-auto rounded home-header-p-bg">
+            <p class=" home-header-p">Share your high and low times, how you recovered. What's your plan next after
+                completing
+                CS50? </p>
+        </div>
+    </div>
+</div>
+{% endblock header %}
+
+{% block content %}
+<div class="container text-center">
+    <div class="col">
+
+    </div>
+    <div class="col">
+        <div class="row"></div>
+        <div class="row"></div>
+    </div>
+</div>
+<div class="container my-5">
+    <div
+        class="position-relative p-5 text-center text-muted bg-body border border-dashed rounded-5 shadow p-3 mb-5 bg-body-tertiary">
+        <button type="button"
+            class="position-absolute top-0 end-0 p-3 m-3 btn-close bg-secondary bg-opacity-10 rounded-pill"
+            aria-label="Close"></button>
+        <h1 class="text-body-emphasis">Post heading</h1>
+        <p class="col-lg-6 mx-auto mb-4">
+            Post Description
+        </p>
+        <button class="btn btn-primary px-5 mb-5" type="button">
+            Know More
+        </button>
+    </div>
+</div>
+{% endblock %}
+
+
+echo "# CS50X-finalProject" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/SoraK93/CS50X-finalProject.git
+git push -u origin main

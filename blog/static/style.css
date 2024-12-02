@@ -1,0 +1,29 @@
+body {
+    background-color: rgba(5, 43, 101, 0.2);
+}
+
+#home-bg {
+    background-image: url(../static/home.jpg);
+    opacity: 1;
+}
+.home-header-bg {
+    background-color: rgba(5, 43, 101, 0.2);
+}
+.home-header-text {
+    color: rgb(5, 43, 101);
+    align-items: center;
+}
+.home-header-text>h1 {
+    
+    text-shadow: 2px 2px 2px rgba(177, 198, 236, 0.925);
+}
+
+.home-header-p-bg {
+    width: 65%;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+.home-header-p {
+    font-weight: 400;
+    font-size: large;
+    color: rgb(5, 43, 101);
+}
