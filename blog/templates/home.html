@@ -16,37 +16,41 @@
 {% endblock header %}
 
 {% block content %}
-<div class="container text-center">
-    <div class="col">
-
-    </div>
-    <div class="col">
-        <div class="row"></div>
-        <div class="row"></div>
-    </div>
-</div>
-<div class="container my-5">
+<div class="container col-7 my-5">
     <div
-        class="position-relative p-5 text-center text-muted bg-body border border-dashed rounded-5 shadow p-3 mb-5 bg-body-tertiary">
-        <button type="button"
-            class="position-absolute top-0 end-0 p-3 m-3 btn-close bg-secondary bg-opacity-10 rounded-pill"
-            aria-label="Close"></button>
-        <h1 class="text-body-emphasis">Post heading</h1>
-        <p class="col-lg-6 mx-auto mb-4">
-            Post Description
-        </p>
-        <button class="btn btn-primary px-5 mb-5" type="button">
-            Know More
-        </button>
+        class="position-relative text-muted bg-body border border-dashed rounded-5 shadow py-5 mb-5 bg-body-tertiary row justify-content-md-center">
+        <div class="col-auto">
+            <div class="row py-2 mt-3">
+                <img src="https://github.com/mdo.png" alt="mdo" width="70" height="70" class="rounded-circle">
+            </div>
+            <div class="row py-2">
+                <a href="#" class=" link-body-emphasis text-decoration-none" aria-expanded="false">
+                    #Username
+                </a>
+            </div>
+        </div>
+
+        <div class="col-7 mx-5">
+            <button type="button"
+                class="position-absolute top-0 end-0 p-3 m-3 btn-close bg-secondary bg-opacity-10 rounded-pill"
+                aria-label="Close"></button>
+            <h1 class="text-body-emphasis"><u>paragraph of placeholder text</u></h1>
+            <p class="col-6 mx-auto mb-4">
+            <p>And yet, here you are, still persevering in reading this placeholder text, hoping for some more
+                insights, or
+                some hidden easter egg of content. A joke, perhaps. Unfortunately, there's none of that here.</p>
+            <p>And yet,
+                here
+                you are, still persevering in reading this placeholder text, hoping for some more insights, or some
+                hidden
+                easter egg of content. A joke, perhaps. Unfortunately, there's none of that here.</p>
+            </p>
+            <div class="col d-flex justify-content-end">
+                <button class="btn btn-primary px-5 mb-3" type="button">
+                    Know More
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
-
-
-echo "# CS50X-finalProject" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/SoraK93/CS50X-finalProject.git
-git push -u origin main

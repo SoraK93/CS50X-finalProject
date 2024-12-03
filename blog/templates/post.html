@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block header %}
+<div class="container-fluid h-75 text-center text-white border rounded" id="post-bg">
+    <div class="post-header-bg container-fluid h-100"></div>
+    <div class="container position-absolute top-50 start-50 translate-middle post-header-text">
+        <h1 class="fs-1">Create New Post</h1>
+        <p class="col-lg-8 mx-auto lead font-monospace">What would you like to share today?</p>
+        
+    </div>
+</div>
+{% endblock header %}
+
+{% block content %}
+<div class="container">
+    <div class="w-75 h-75 mx-auto d-flex">
+        <main class="form-signin w-100 align-self-center">
+            <form class="">
+                <h1 class="h4 mb-3 text-center fw-normal">Please sign up</h1>
+                <div class="form-floating">
+                    <input type="email" class="form-control form-control-sm" id="floatingInput"
+                        placeholder="name@example.com" autofocus>
+                    <label for="floatingInput">Heading</label>
+                </div>
+                <div class="form-floating pt-1">
+                    <input type="email" class="form-control form-control-sm" id="floatingInput"
+                        placeholder="name@example.com">
+                    <label for="floatingInput">Description</label>
+                </div>
+                <div class="form-floating pt-1">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                    <label for="floatingPassword">Content Body</label>
+                </div>
+                <div class="form-floating d-flex justify-content-end my-2 mx-3">
+                    <button class="btn btn-primary w-auto py-2" type="submit">Submit Post</button>
+                </div>
+                
+            </form>
+        </main>
+    </div>
+</div>
+{% endblock %}
