@@ -1,5 +1,8 @@
-from blog import app
-from flask import render_template
+from blog import app, bcrypt, db
+from blog.models import User, Post
+from flask import render_template, redirect, url_for
+from flask_wtf.form import Form
+from blog.forms import RegistrationForm
 
 
 @app.route("/")
@@ -12,9 +15,20 @@ def login():
 	return render_template("login.html")
 
 
-@app.route("/register")
+@app.route("/register", methods=["GET", "POST"])
 def register():
-	return render_template("register.html")
+	form = RegistrationForm()
+	if form.validate_on_submit():
+		hashed_password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
+		new_user = User(
+			username=form.username.data,
+			email=form.email.data,
+			password=hashed_password
+		)
+		db.session.add(new_user)
+		db.session.commit()
+		return redirect(url_for("login"))
+	return render_template("register.html", form=form)
 
 
 @app.route("/about")

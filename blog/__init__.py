@@ -1,3 +1,6 @@
+import os
+from flask_bcrypt import Bcrypt
+from dotenv import load_dotenv
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
@@ -8,13 +11,12 @@ class Base(DeclarativeBase):
 
 
 # Initial Config
+load_dotenv()
 db = SQLAlchemy(model_class=Base)
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
+app.secret_key = os.environ["SECRET_KEY"]
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["SQLALCHEMY_DATABASE_URI"]
+bcrypt = Bcrypt(app)
 db.__init__(app)
-
-from blog import models
-with app.app_context():
-    db.create_all()
 
 from blog import routes
