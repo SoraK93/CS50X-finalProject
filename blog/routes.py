@@ -1,6 +1,6 @@
 from blog import app, bcrypt, db
 from blog.models import User, Post
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, flash
 from flask_wtf.form import Form
 from blog.forms import RegistrationForm
 
@@ -27,6 +27,7 @@ def register():
 		)
 		db.session.add(new_user)
 		db.session.commit()
+		flash(message="You have registered successfully.", category="success")
 		return redirect(url_for("login"))
 	return render_template("register.html", form=form)
 
