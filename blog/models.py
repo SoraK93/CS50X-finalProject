@@ -1,11 +1,12 @@
 from blog import db
+from flask_login import UserMixin
 from datetime import datetime
 from sqlalchemy import Integer, String, Text, DateTime, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column,relationship
 
 
 # This table is for storing Users information
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = "user"
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     username: Mapped[str] = mapped_column(String(20), nullable=False, unique=True)
