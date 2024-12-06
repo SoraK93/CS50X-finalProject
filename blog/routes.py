@@ -1,6 +1,6 @@
 from blog import app, bcrypt, db, login_manager
 from blog.models import User, Post
-from flask import flash, render_template, redirect, request, url_for
+from flask import flash, render_template, redirect, request, url_for, abort
 from flask_login import login_required, login_user, logout_user, current_user
 from flask_wtf.form import Form
 from blog.forms import RegistrationForm, LoginForm, CreatePostForm
@@ -20,6 +20,9 @@ def home():
 @app.route("/register", methods=["GET", "POST"])
 def register():
 	form = RegistrationForm()
+	if current_user.is_authenticated:
+		flash("You are already logged in", "info")
+		return redirect(url_for("home"))
 	if form.validate_on_submit():
 		hashed_password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
 		new_user = User(
@@ -37,7 +40,9 @@ def register():
 @app.route("/login", methods=["GET", "POST"])
 def login():
 	form = LoginForm()
-	
+	if current_user.is_authenticated:
+		flash("You are already logged in", "info")
+		return redirect(url_for("home"))
 	if form.validate_on_submit():
 		email = form.email.data
 		user = db.session.execute(db.select(User).where(User.email==email)).scalar()
@@ -88,9 +93,12 @@ def post():
 
 
 @app.route("/update_post/<int:post_id>", methods=["GET", "POST"])
+@login_required
 def update_post(post_id):
 	form = CreatePostForm()
 	post = db.session.execute(db.select(Post).where(Post.id==post_id)).scalar()
+	if current_user.id != post.author_id:
+		abort(403)
 	if form.validate_on_submit():
 		post.title = form.heading.data
 		post.description = form.description.data

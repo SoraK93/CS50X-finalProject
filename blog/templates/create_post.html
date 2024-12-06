@@ -4,14 +4,12 @@
 <div class="container-fluid h-75 text-center text-white border rounded" id="post-bg">
     <div class="post-header-bg container-fluid h-100"></div>
     <div class="container position-absolute top-50 start-50 translate-middle post-header-text {{ update }}">
-        {% if current_user.is_authenticated %}
         {% if update %}
         <h1 class="fs-1">Edit Post</h1>
         <p class="col-lg-8 mx-auto lead font-monospace">Updating - {{ post.title }}</p>
         {% else %}
         <h1 class="fs-1">Create New Post</h1>
         <p class="col-lg-8 mx-auto lead font-monospace">What would you like to share today?</p>
-        {% endif %}
         {% endif %}
     </div>
 </div>
@@ -61,7 +59,7 @@
                         {{ form.content.label(class="floatingInput") }}
                         {{ form.content(class="form-control form-control-lg") }}
                     </div>
-                    {{ form.submit(class="btn btn-primary w-100 py-2 mt-3") }}
+                    {{ form.submit(class="btn btn-primary w-100 py-2 mt-3", value="Update Post") }}
                     <div class="form-group pt-1 w-100 h-50">
                         
                     </div>

@@ -33,12 +33,6 @@ body {
     color: rgb(0, 183, 255);
     text-shadow: 1px 1px 1px rgb(3, 4, 97);
 }
-.home-post-title {
-    color: black;
-}
-.home-post-title:hover {
-    color: rgb(0, 183, 255);
-}
 
 /* Contact Page */
 #contact-bg {
