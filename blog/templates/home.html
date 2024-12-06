@@ -21,34 +21,27 @@
 
 {% block content %}
 <div class="container col-7 my-5">
+    {% for post in posts %}
     <div
         class="position-relative text-muted bg-body border border-dashed rounded-5 shadow py-5 mb-5 bg-body-tertiary row justify-content-md-center">
         <div class="col-auto">
             <div class="row py-2 mt-3">
-                <img src="https://github.com/mdo.png" alt="mdo" width="70" height="70" class="rounded-circle">
+                <img src="{{ url_for('static', filename='profile_pics/' + post.author.profile_photo) }}" alt="mdo" width="70" height="70" class="rounded-circle">
             </div>
             <div class="row py-2">
-                <a href="#" class=" link-body-emphasis text-decoration-none" aria-expanded="false">
-                    #Username
+                <a href="#" class=" link-body-emphasis text-center text-decoration-none" aria-expanded="false">
+                    {{ post.author.username }}
                 </a>
             </div>
         </div>
 
+        
         <div class="col-7 mx-5">
-            <button type="button"
-                class="position-absolute top-0 end-0 p-3 m-3 btn-close bg-secondary bg-opacity-10 rounded-pill"
-                aria-label="Close"></button>
-            <h1 class="text-body-emphasis"><u>paragraph of placeholder text</u></h1>
-            <p class="col-6 mx-auto mb-4">
-            <p>And yet, here you are, still persevering in reading this placeholder text, hoping for some more
-                insights, or
-                some hidden easter egg of content. A joke, perhaps. Unfortunately, there's none of that here.</p>
-            <p>And yet,
-                here
-                you are, still persevering in reading this placeholder text, hoping for some more insights, or some
-                hidden
-                easter egg of content. A joke, perhaps. Unfortunately, there's none of that here.</p>
-            </p>
+            <button type="button" class="position-absolute top-0 end-0 p-3 m-3 btn-close bg-secondary bg-opacity-10 rounded-pill" aria-label="Close"></button>
+            <h2 class="">
+                <a href="{{ url_for('update_post', post_id=post.id) }}" class="text-decoration-none home-post-title">{{ post.title }}</a>
+            </h2>
+            <p class="col-6 mb-4 fs-5">{{ post.description}}</p>
             <div class="col d-flex justify-content-end">
                 <button class="btn btn-primary px-5 mb-3" type="button">
                     Know More
@@ -56,5 +49,6 @@
             </div>
         </div>
     </div>
+    {% endfor %}
 </div>
 {% endblock %}

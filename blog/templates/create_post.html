@@ -3,10 +3,16 @@
 {% block header %}
 <div class="container-fluid h-75 text-center text-white border rounded" id="post-bg">
     <div class="post-header-bg container-fluid h-100"></div>
-    <div class="container position-absolute top-50 start-50 translate-middle post-header-text">
+    <div class="container position-absolute top-50 start-50 translate-middle post-header-text {{ update }}">
+        {% if current_user.is_authenticated %}
+        {% if update %}
+        <h1 class="fs-1">Edit Post</h1>
+        <p class="col-lg-8 mx-auto lead font-monospace">Updating - {{ post.title }}</p>
+        {% else %}
         <h1 class="fs-1">Create New Post</h1>
         <p class="col-lg-8 mx-auto lead font-monospace">What would you like to share today?</p>
-        
+        {% endif %}
+        {% endif %}
     </div>
 </div>
 {% endblock header %}

@@ -13,7 +13,6 @@ body {
     background-position: 0 -1200px;
     opacity: 1;
 }
-
 .home-header-bg {
     background-color: rgba(5, 43, 101, 0.2);
 }
@@ -33,6 +32,12 @@ body {
     font-size: large;
     color: rgb(0, 183, 255);
     text-shadow: 1px 1px 1px rgb(3, 4, 97);
+}
+.home-post-title {
+    color: black;
+}
+.home-post-title:hover {
+    color: rgb(0, 183, 255);
 }
 
 /* Contact Page */

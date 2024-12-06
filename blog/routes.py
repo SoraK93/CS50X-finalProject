@@ -29,7 +29,7 @@ def register():
 		)
 		db.session.add(new_user)
 		db.session.commit()
-		flash(message="You have registered successfully.", category="success")
+		flash(message="You have registered successfully", category="success")
 		return redirect(url_for("login"))
 	return render_template("register.html", form=form)
 
@@ -84,4 +84,21 @@ def post():
 		db.session.add(new_post)
 		db.session.commit()
 		return redirect(url_for("home"))
-	return render_template("post.html", form=form)
+	return render_template("create_post.html", form=form)
+
+
+@app.route("/update_post/<int:post_id>", methods=["GET", "POST"])
+def update_post(post_id):
+	form = CreatePostForm()
+	post = db.session.execute(db.select(Post).where(Post.id==post_id)).scalar()
+	if form.validate_on_submit():
+		post.title = form.heading.data
+		post.description = form.description.data
+		post.content = form.content.data
+		db.session.commit()
+		flash("Your post has been updated", "success")
+		return redirect(url_for("home"))
+	form.heading.data = post.title
+	form.description.data = post.description
+	form.content.data = post.content
+	return render_template("create_post.html", form=form, post=post, update=True)
