@@ -1,9 +1,9 @@
 from blog import app, bcrypt, db, login_manager
 from blog.models import User, Post
 from flask import flash, render_template, redirect, request, url_for
-from flask_login import login_required, login_user, logout_user
+from flask_login import login_required, login_user, logout_user, current_user
 from flask_wtf.form import Form
-from blog.forms import RegistrationForm, LoginForm
+from blog.forms import RegistrationForm, LoginForm, CreatePostForm
 
 
 @login_manager.user_loader
@@ -13,7 +13,8 @@ def load_user(user_id):
 
 @app.route("/")
 def home():
-	return render_template("home.html", pagetitle="HomePage")
+	posts = db.session.execute(db.select(Post)).scalars()
+	return render_template("home.html", pagetitle="HomePage", posts=posts)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -69,7 +70,18 @@ def contact():
 	return render_template("contact.html")
 
 
-@app.route("/post")
+@app.route("/post", methods=["GET", "POST"])
 @login_required
 def post():
-	return render_template("post.html")
+	form = CreatePostForm()
+	if form.validate_on_submit():
+		new_post = Post(
+			title = form.heading.data,
+			description = form.description.data,
+			content = form.content.data,
+			author = current_user
+		)
+		db.session.add(new_post)
+		db.session.commit()
+		return redirect(url_for("home"))
+	return render_template("post.html", form=form)

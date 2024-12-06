@@ -1,5 +1,6 @@
 from blog import db
 from blog.models import User, Post
+from flask_ckeditor import CKEditorField
 from flask_wtf import FlaskForm
 from wtforms import StringField, EmailField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
@@ -29,4 +30,11 @@ class LoginForm(FlaskForm):
     password = PasswordField("Password", validators=[DataRequired(message="Cannot be empty.")])
     remember = BooleanField("Remember Me")
     submit = SubmitField("Sign In")
+
+
+class CreatePostForm(FlaskForm):
+    heading = StringField("Heading", validators=[Length(max=50, message="Cannot be more than 50 words.")])
+    description = StringField("Description", validators=[Length(max=240, message="Cannot be more than 240 words")])
+    content = CKEditorField("Content", validators=[Length(min=1, message="Cannot create a empty post.")])
+    submit = SubmitField("Create Post")
 

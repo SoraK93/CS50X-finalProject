@@ -2,6 +2,12 @@ body {
     background-color: rgba(5, 43, 101, 0.2);
 }
 
+/* Header Section */
+#home-bg, #contact-bg, #about-bg, #post-bg {
+    box-shadow: 0 4px 5px rgba(5, 43, 101, 0.2);
+}
+
+/* Home Page */
 #home-bg {
     background-image: url(../static/home.avif);
     background-position: 0 -1200px;
@@ -29,26 +35,30 @@ body {
     text-shadow: 1px 1px 1px rgb(3, 4, 97);
 }
 
+/* Contact Page */
 #contact-bg {
     background-image: url("../static/contactus.avif");
     background-size: cover;
     background-position: 0px -150px;
 }
 .contact-header-text {
-    text-shadow: 3px 1px 2px rgb(0, 0, 0);
+    color: rgb(0, 183, 255);
+    text-shadow: 2px 2px 2px rgb(0, 0, 0);
 }
 .contact-header-p-bg {
     width: 30%;
     background-color: rgba(255, 255, 255, 0.507);
 }
 
+/* About Page */
 #about-bg {
     background-image: url("../static/aboutus.avif");
     background-size: cover;
     background-position: 0px -40px;
 }
 .about-header-text {
-    text-shadow: 0px 1px 2px rgb(7, 140, 192);
+    color: rgb(0, 183, 255);
+    text-shadow: 2px 2px 2px rgb(0, 0, 0);
 }
 .about-header-p-bg {
     width: 30%;
@@ -60,4 +70,19 @@ body {
     background-repeat: no-repeat;
     align-items: center;
     background-position: 0px -340px;
+}
+
+/* New Post Page */
+#post-bg {
+    background-image: url("../static/createpost.jpg");
+    background-size: cover;
+    background-position: 0px -250px;
+}
+.post-header-text {
+    color: rgb(0, 183, 255);
+    text-shadow: 2px 2px 2px rgb(0, 0, 0);
+}
+.post-header-p-bg {
+    width: 30%;
+    background-color: rgba(255, 255, 255, 0.507);
 }

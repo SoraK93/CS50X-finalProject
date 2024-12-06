@@ -12,30 +12,57 @@
 {% endblock header %}
 
 {% block content %}
-<div class="container">
-    <div class="w-75 h-75 mx-auto d-flex">
-        <main class="form-signin w-100 align-self-center">
-            <form class="">
-                <h1 class="h4 mb-3 text-center fw-normal">Please sign up</h1>
-                <div class="form-floating">
-                    <input type="email" class="form-control form-control-sm" id="floatingInput"
-                        placeholder="name@example.com" autofocus>
-                    <label for="floatingInput">Heading</label>
-                </div>
-                <div class="form-floating pt-1">
-                    <input type="email" class="form-control form-control-sm" id="floatingInput"
-                        placeholder="name@example.com">
-                    <label for="floatingInput">Description</label>
-                </div>
-                <div class="form-floating pt-1">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">Content Body</label>
-                </div>
-                <div class="form-floating d-flex justify-content-end my-2 mx-3">
-                    <button class="btn btn-primary w-auto py-2" type="submit">Submit Post</button>
-                </div>
-                
+<div class="container h-75">
+    <div class="w-75 h-75 mx-auto my-10 d-flex">
+        <main class="form-signin w-100 h-50 align-self-center">
+            <form action="" method="POST" novalidate>
+                <fieldset class="form-group">
+                    {{ form.hidden_tag() }}
+                    <legend class="bottom-border mb3 text-center">Something you would like to share?...</legend>
+
+                    <!-- Heading Section -->
+                    <div class="form-group pt-1">
+                        {{ form.heading.label(class="floatingInput") }}
+                        {% if form.heading.errors %}
+                        {{ form.heading(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.heading.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.heading(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+
+                    <!-- Description Section -->
+                    <div class="form-group pt-1">
+                        {{ form.description.label(class="floatingInput") }}
+                        {% if form.description.errors %}
+                        {{ form.description(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.description.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.description(class="form-control form-control-lg bottom-border") }}
+                        {% endif %}
+                    </div>
+
+                    <!-- Content Section -->
+                    <div class="form-group pt-1">
+                        {{ form.content.label(class="floatingInput") }}
+                        {{ form.content(class="form-control form-control-lg") }}
+                    </div>
+                    {{ form.submit(class="btn btn-primary w-100 py-2 mt-3") }}
+                    <div class="form-group pt-1 w-100 h-50">
+                        
+                    </div>
+                </fieldset>
             </form>
+            {{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
+            {{ ckeditor.config(name="content") }}
         </main>
     </div>
 </div>

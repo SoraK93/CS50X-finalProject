@@ -28,7 +28,7 @@ class Post(db.Model):
     title: Mapped[str] = mapped_column(String(100), nullable=False)
     description: Mapped[str] = mapped_column(String(120), nullable=False)
     content: Mapped[str] = mapped_column(Text, nullable=False)
-    datetime: Mapped[str] = mapped_column(DateTime, nullable=False, default=datetime.now)
+    date_posted: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.now)
     # Below lines will link post table to user table
     author_id: Mapped[int] = mapped_column(Integer, ForeignKey("user.id"), nullable=False)
     author = relationship("User", back_populates="user_post")
