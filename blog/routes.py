@@ -81,15 +81,15 @@ def post():
 	form = CreatePostForm()
 	if form.validate_on_submit():
 		new_post = Post(
-			title = form.heading.data,
-			description = form.description.data,
-			content = form.content.data,
-			author = current_user
+			title=form.heading.data,
+			description=form.description.data,
+			content=form.content.data,
+			author=current_user
 		)
 		db.session.add(new_post)
 		db.session.commit()
 		return redirect(url_for("home"))
-	return render_template("create_post.html", form=form)
+	return render_template("create_post.html", form=form, value="Create")
 
 
 @app.route("/update_post/<int:post_id>", methods=["GET", "POST"])
@@ -98,7 +98,7 @@ def update_post(post_id):
 	form = CreatePostForm()
 	post = db.session.execute(db.select(Post).where(Post.id==post_id)).scalar()
 	if current_user.id != post.author_id:
-		abort(403)
+		abort(401)
 	if form.validate_on_submit():
 		post.title = form.heading.data
 		post.description = form.description.data
@@ -109,4 +109,16 @@ def update_post(post_id):
 	form.heading.data = post.title
 	form.description.data = post.description
 	form.content.data = post.content
-	return render_template("create_post.html", form=form, post=post, update=True)
+	return render_template("create_post.html", form=form, post=post, value="Update")
+
+
+@app.route("/delete_post/<int:post_id>")
+@login_required
+def delete_post(post_id):
+	post = db.session.execute(db.select(Post).where(Post.id==post_id)).scalar()
+	if current_user.id != post.author_id:
+		abort(401)
+	db.session.delete(post)
+	db.session.commit()
+	flash("Your post has been successfully deleted", "success")
+	return redirect(url_for("home"))

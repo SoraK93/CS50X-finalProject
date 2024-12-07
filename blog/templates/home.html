@@ -37,10 +37,16 @@
 
         
         <div class="col-7 mx-5">
-            <button type="button" class="position-absolute top-0 end-0 p-3 m-3 btn-close bg-secondary bg-opacity-10 rounded-pill" aria-label="Close"></button>
+            <!-- Button X - Used for deleting post - Post Author Verification -->
+            {% if current_user.id == post.author_id %}
+            <form action="{{ url_for('delete_post', post_id=post.id) }}" method="">
+                <button type="submit" class="position-absolute top-0 end-0 p-3 m-3 btn-close bg-secondary bg-opacity-10 rounded-pill" aria-label="Close"></button>
+            </form>
+            {% endif %}
             <h2 class="text-black">{{ post.title }}</h2>
             <p class="col-6 mb-4 fs-5">{{ post.description}}</p>
             <div class="col d-flex justify-content-end">
+                <!-- Update Button - Checks for author verification -->
                 {% if current_user.id == post.author_id %}
                 <form action="{{ url_for('update_post', post_id=post.id) }}" method="GET">
                     <button class="btn btn-primary px-auto mb-3 mx-2" type="submit">
