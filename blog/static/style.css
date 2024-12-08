@@ -85,3 +85,12 @@ body {
     width: 30%;
     background-color: rgba(255, 255, 255, 0.507);
 }
+
+#show-post-bg {
+    background-position: center;
+    background-size: cover;
+}
+#show-post-content {
+    text-align: justify;
+    text-justify: inter-word;
+}

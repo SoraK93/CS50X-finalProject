@@ -27,6 +27,7 @@ class Post(db.Model):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     title: Mapped[str] = mapped_column(String(100), nullable=False)
     description: Mapped[str] = mapped_column(String(120), nullable=False)
+    post_image: Mapped[str] = mapped_column(String(300), nullable=False)
     content: Mapped[str] = mapped_column(Text, nullable=False)
     date_posted: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.now)
     # Below lines will link post table to user table

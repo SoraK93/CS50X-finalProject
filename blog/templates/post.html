@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+
+{% block header %}
+<div class="container-fluid h-75 text-center border rounded" id="show-post-bg"
+    style="background-image: url('{{ post.post_image }}');">
+    <div class="-header-bg container-fluid h-100"></div>
+    <div class="container position-absolute top-50 start-50 translate-middle post-header-text">
+        <h1 class="fs-1">{{ post.title}}</h1>
+        <p class="col-lg-8 mx-auto lead font-monospace"></p>
+        <div class=" container mx-auto rounded -header-p-bg">
+            <p class=" post-header-p">{{ post.description }}</p>
+        </div>
+    </div>
+</div>
+{% endblock header %}
+
+{% block content %}
+<div class="container my-5">
+    <div
+        class="position-relative text-muted bg-body border border-dashed rounded-5 shadow py-5 mb-5 bg-body-tertiary row justify-content-md-center">
+        <div class="col-1">
+            <div class="row py-2 mt-3">
+                <img src="{{ url_for('static', filename='profile_pics/' + post.author.profile_photo) }}" alt="mdo"
+                    width="70" height="70" class="rounded-circle">
+            </div>
+            <div class="row py-2">
+                <a href="#" class=" link-body-emphasis text-center text-decoration-none" aria-expanded="false">
+                    {{ post.author.username }}
+                </a>
+            </div>
+        </div>
+
+        <div class="col-6 mx-5">
+            <div class="row mx-5">
+                <h2 class="text-black">{{ post.title }}</h2>
+            </div>
+
+            <div class="row mx-5">
+                <p class="mb-4 fs-5">{{ post.description }}</p>
+            </div>
+        </div>
+
+        <!-- Update & Delete Button - Checks for author verification -->
+        <div class="col-3 d-flex flex-column align-items-end">
+
+            {% if current_user.id == post.author_id %}
+            <div>
+                <form action="{{ url_for('update_post', post_id=post.id) }}" method="GET">
+                    <button class="btn btn-primary px-auto" type="submit">
+                        Update
+                    </button>
+                </form>
+            </div>
+            <div>
+                <button type="button" class="btn btn-danger px-3" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                    Delete
+                </button>
+            </div>
+            {% endif %}
+        </div>
+        <!-- Content of the post -->
+            <div class="container px-4 px-lg-5">
+                <div class="row justify-content-md-center" id="show-post-content">
+                    <div class="col-10">
+                        {{ post.content|safe }}
+                    </div>
+                </div>
+            </div>
+        <!-- Mentioning author and date of the post -->
+        <div class="row">
+            <div class="col-11 pe-4 text-end">
+                <p class="my-4 fs-6">Posted on {{ date }} by {{ post.author.username }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Button Modal - Confirmation before deleting the post -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="deleteModalLabel">Delete Post</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this post?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <form action="{{ url_for('delete_post', post_id=post.id) }}" method="GET">
+                    <button type="submit" class="btn btn-danger">Delete Post</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

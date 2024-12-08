@@ -83,6 +83,7 @@ def post():
 		new_post = Post(
 			title=form.heading.data,
 			description=form.description.data,
+			post_image=form.post_image.data,
 			content=form.content.data,
 			author=current_user
 		)
@@ -102,12 +103,14 @@ def update_post(post_id):
 	if form.validate_on_submit():
 		post.title = form.heading.data
 		post.description = form.description.data
+		post.post_image = form.post_image.data
 		post.content = form.content.data
 		db.session.commit()
 		flash("Your post has been updated", "success")
 		return redirect(url_for("home"))
 	form.heading.data = post.title
 	form.description.data = post.description
+	form.post_image.data = post.post_image
 	form.content.data = post.content
 	return render_template("create_post.html", form=form, post=post, value="Update")
 
@@ -122,3 +125,12 @@ def delete_post(post_id):
 	db.session.commit()
 	flash("Your post has been successfully deleted", "success")
 	return redirect(url_for("home"))
+
+
+@app.route("/show_post/<int:post_id>")
+def show_post(post_id):
+	post = db.session.execute(db.select(Post).where(Post.id==post_id)).scalar()
+	if not post:
+		flash("Invalid input provided.", "warning")
+		return redirect(url_for("home"))
+	return render_template("post.html", post=post, date=post.date_posted.strftime("%Y-%m-%d"))

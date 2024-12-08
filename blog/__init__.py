@@ -33,8 +33,6 @@ bcrypt = Bcrypt(app)
 
 # Ckeditor Initialize
 ckeditor = CKEditor(app)
-app.config["CKEDITOR_HEIGHT"] = 200
-app.config["CKEDITOR_ENABLE_CODESNIPPET"] = True
 
 from blog import routes
 

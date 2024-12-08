@@ -3,7 +3,7 @@ from blog.models import User, Post
 from flask_ckeditor import CKEditorField
 from flask_wtf import FlaskForm
 from wtforms import StringField, EmailField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, URL
 
 
 class RegistrationForm(FlaskForm):
@@ -33,8 +33,9 @@ class LoginForm(FlaskForm):
 
 
 class CreatePostForm(FlaskForm):
-    heading = StringField("Heading", validators=[Length(max=50, message="Cannot be more than 50 words.")])
-    description = StringField("Description", validators=[Length(max=240, message="Cannot be more than 240 words")])
-    content = CKEditorField("Content", validators=[Length(min=1, message="Cannot create a empty post.")])
+    heading = StringField("Heading", validators=[DataRequired("Cannot have empty heading."), Length(max=50, message="Cannot be more than 50 words.")])
+    description = StringField("Description", validators=[DataRequired("Cannot post without providing description."), Length(max=240, message="Cannot be more than 240 words")])
+    post_image = StringField("Post Image URL", validators=[DataRequired("Cannot post without a URL."), URL()])
+    content = CKEditorField("Content", validators=[DataRequired("Cannot post with empty content."), Length(min=1, message="Cannot create a empty post.")])
     submit = SubmitField("Create Post")
 

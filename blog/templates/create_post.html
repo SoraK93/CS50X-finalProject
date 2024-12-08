@@ -26,51 +26,69 @@
 
                     <!-- Heading Section -->
                     <div class="form-group pt-1">
-                        {{ form.heading.label(class="floatingInput") }}
+                        {{ form.heading.label(class_="floatingInput") }}
                         {% if form.heading.errors %}
-                        {{ form.heading(class="form-control form-control-lg is-invalid") }}
+                        {{ form.heading(class_="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
                             {% for error in form.heading.errors %}
                             <span>{{ error }}</span>
                             {% endfor %}
                         </div>
                         {% else %}
-                        {{ form.heading(class="form-control form-control-lg") }}
+                        {{ form.heading(class_="form-control form-control-lg", aria_describedby="headingHelp") }}
+                        <div id="headingHelp" class="form-text">Can contain max 50 words. Required.</div>
                         {% endif %}
                     </div>
 
                     <!-- Description Section -->
                     <div class="form-group pt-1">
-                        {{ form.description.label(class="floatingInput") }}
+                        {{ form.description.label(class_="floatingInput") }}
                         {% if form.description.errors %}
-                        {{ form.description(class="form-control form-control-lg is-invalid") }}
+                        {{ form.description(class_="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
                             {% for error in form.description.errors %}
                             <span>{{ error }}</span>
                             {% endfor %}
                         </div>
                         {% else %}
-                        {{ form.description(class="form-control form-control-lg bottom-border") }}
+                        {{ form.description(class_="form-control form-control-lg", aria_describedby="descriptionHelp") }}
+                        <div id="descriptionHelp" class="form-text">Can contain max 240 words. Required.</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Post Image URL Section -->
+                    <div class="form-group pt-1">
+                        {{ form.post_image.label(class_="floatingInput") }}
+                        {% if form.post_image.errors %}
+                        {{ form.post_image(class_="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.post_image.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.post_image(class_="form-control form-control-lg" ,aria_describedby="imageUrlHelp") }}
+                        <div id="imageUrlHelp" class="form-text">Make sure that image is atleast 1080p size. Required.</div>
                         {% endif %}
                     </div>
 
                     <!-- Content Section -->
                     <div class="form-group pt-1">
-                        {{ form.content.label(class="floatingInput") }}
-                        {{ form.content(class="form-control form-control-lg") }}
+                        {{ form.content.label(class_="floatingInput") }}
+                        {{ form.content(class_="form-control form-control-lg") }}
                     </div>
                     {% if value == "Create" %}
-                    {{ form.submit(class="btn btn-primary w-100 py-2 mt-3", value="Create Post") }}
+                    {{ form.submit(class_="btn btn-primary w-100 py-2 mt-3", value="Create Post") }}
                     {% else %}
-                    {{ form.submit(class="btn btn-primary w-100 py-2 mt-3", value="Update Post") }}
+                    {{ form.submit(class_="btn btn-primary w-100 py-2 mt-3", value="Update Post") }}
                     {% endif %}
                     <div class="form-group pt-1 w-100 h-50">
                         
                     </div>
                 </fieldset>
             </form>
-            {{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
-            {{ ckeditor.config(name="content") }}
+            {{ ckeditor.load() }}
+            {{ ckeditor.config(name="content", height=500) }}
         </main>
     </div>
 </div>
