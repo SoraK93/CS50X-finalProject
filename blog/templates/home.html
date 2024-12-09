@@ -24,24 +24,21 @@
     {% for post in posts %}
     <div
         class="position-relative text-muted bg-body border border-dashed rounded-5 shadow py-5 mb-5 bg-body-tertiary row justify-content-md-center">
-        <div class="col-auto">
-            <div class="row py-2 mt-3">
-                <img src="{{ url_for('static', filename='profile_pics/' + post.author.profile_photo) }}" alt="mdo" width="70" height="70" class="rounded-circle">
-            </div>
-            <div class="row py-2">
-                <a href="#" class=" link-body-emphasis text-center text-decoration-none" aria-expanded="false">
-                    {{ post.author.username }}
-                </a>
-            </div>
+        <div class="col-auto d-flex flex-column">
+            <img src="{{ url_for('static', filename='profile_pics/' + post.author.profile_photo) }}" alt="mdo"
+                width="70" height="70" class="rounded-circle mt-4 mx-auto">
+            <a href="#" class="link-body-emphasis text-center text-decoration-none mt-3" aria-expanded="false">
+                {{ post.author.username }}
+            </a>
         </div>
 
-        
+
         <div class="col-7 mx-5">
             <!-- Button X - Used for deleting post - Post Author Verification -->
             {% if current_user.id == post.author_id %}
-            <form action="{{ url_for('delete_post', post_id=post.id) }}" method="">
-                <button type="submit" class="position-absolute top-0 end-0 p-3 m-3 btn-close bg-secondary bg-opacity-10 rounded-pill" aria-label="Close"></button>
-            </form>
+            <button type="button"
+                class="position-absolute top-0 end-0 p-3 m-3 btn-close bg-secondary bg-opacity-10 rounded-pill"
+                aria-label="Close" data-bs-toggle="modal" data-bs-target="#deleteModal"></button>
             {% endif %}
             <h2 class="text-black">{{ post.title }}</h2>
             <p class="col-6 mb-4 fs-5">{{ post.description}}</p>
@@ -62,6 +59,9 @@
             </div>
         </div>
     </div>
+    {% include "delete_modal.html" %}
     {% endfor %}
 </div>
+
+
 {% endblock %}
