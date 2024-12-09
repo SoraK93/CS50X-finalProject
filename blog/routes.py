@@ -1,9 +1,12 @@
+import os
+import secrets
 from blog import app, bcrypt, db, login_manager
+from blog.forms import RegistrationForm, LoginForm, CreatePostForm, UpdateUserForm, ResetPasswordForm
 from blog.models import User, Post
-from flask import flash, render_template, redirect, request, url_for, abort
+from flask import flash, render_template, redirect, request, url_for, abort, current_app
 from flask_login import login_required, login_user, logout_user, current_user
 from flask_wtf.form import Form
-from blog.forms import RegistrationForm, LoginForm, CreatePostForm
+from PIL import Image
 
 
 @login_manager.user_loader
@@ -97,7 +100,9 @@ def post():
 @login_required
 def update_post(post_id):
 	form = CreatePostForm()
-	post = db.session.execute(db.select(Post).where(Post.id==post_id)).scalar()
+	post = db.session.execute(db.select(Post).where(Post.id==post_id)).scalar_one_or_none()
+	if post is None:
+		abort(404)
 	if current_user.id != post.author_id:
 		abort(401)
 	if form.validate_on_submit():
@@ -107,7 +112,7 @@ def update_post(post_id):
 		post.content = form.content.data
 		db.session.commit()
 		flash("Your post has been updated", "success")
-		return redirect(url_for("home"))
+		return redirect(url_for("show_post", post_id=post.id))
 	form.heading.data = post.title
 	form.description.data = post.description
 	form.post_image.data = post.post_image
@@ -134,3 +139,37 @@ def show_post(post_id):
 		flash("Invalid input provided.", "warning")
 		return redirect(url_for("home"))
 	return render_template("post.html", post=post, date=post.date_posted.strftime("%Y-%m-%d"))
+
+
+def save_profile_pictures(profile_picture):
+	hex_name = secrets.token_hex(8)
+	_, file_extn = os.path.splitext(profile_picture.filename)
+	pic_filename = hex_name + file_extn
+	pic_directory = os.path.join(current_app.root_path, "static/profile_pics", pic_filename)
+	image_size = (150, 150)
+	profile_pic = Image.open(profile_picture)
+	profile_pic.thumbnail(image_size)
+	profile_pic.save(pic_directory)
+	return pic_filename
+
+
+@app.route("/profile", methods=["GET", "POST"])
+def profile():
+	form = UpdateUserForm()
+	if not current_user.is_authenticated:
+		flash("You cannot access this page before logging in.", "warning")
+		return redirect(url_for("login"))
+	if form.validate_on_submit():
+		if form.profile_image.data:
+			new_profile_photo = save_profile_pictures(form.profile_image.data)
+			current_user.profile_photo = new_profile_photo
+		current_user.username = form.username.data
+		current_user.email = form.email.data
+		db.session.commit()
+		flash("Your profile has been updated", "success")
+		return redirect(url_for("profile"))
+	elif request.method == "GET":
+		form.username.data = current_user.username
+		form.email.data = current_user.email
+	image_file = url_for('static', filename='profile_pics/' + current_user.profile_photo)
+	return render_template("profile.html", form=form, image_file=image_file)

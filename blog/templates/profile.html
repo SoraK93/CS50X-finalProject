@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+<div class="container col-7 my-5">
+    <div
+        class="position-relative text-muted bg-body border border-dashed rounded-5 shadow p-5 mb-5 bg-body-tertiary row justify-content-md-center">
+        <div class="d-flex align-items-start">
+            <div class="nav flex-column nav-pills me-3 border" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home"
+                    aria-selected="true">User Settings</button>
+                <button class="nav-link disabled" id="v-pills-profile-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile"
+                    aria-selected="false">...</button>
+            </div>
+            <div class="tab-content container-fluid" id="v-pills-tabContent">
+                {% include "user.html" %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
