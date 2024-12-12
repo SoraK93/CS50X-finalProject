@@ -1,3 +1,4 @@
-#CS50X-finalProject
-
-This is my CS50x final project.
+# CS50 Diary
+#### Video Demo:  <URL HERE>
+#### Description:
+TODO
