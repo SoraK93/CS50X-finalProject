@@ -1,14 +1,14 @@
 {% extends "layout.html" %}
 
 {% block header %}
-<div class="container-fluid h-75 text-center border rounded" id="show-post-bg"
+<div class="container-fluid text-center border rounded" id="show-post-bg"
     style="background-image: url('{{ post.post_image }}');">
     <div class="-header-bg container-fluid h-100"></div>
     <div class="container position-absolute top-50 start-50 translate-middle post-header-text">
         <h1 class="fs-1">{{ post.title}}</h1>
         <p class="col-lg-8 mx-auto lead font-monospace"></p>
         <div class=" container mx-auto rounded -header-p-bg">
-            <p class=" post-header-p">{{ post.description }}</p>
+            <p class="fs-2 post-header-p">{{ post.description }}</p>
         </div>
     </div>
 </div>
@@ -18,10 +18,9 @@
 <div class="container my-5">
     <div
         class="position-relative text-muted bg-body border-dashed rounded-5 shadow py-5 mb-5 bg-body-tertiary row justify-content-md-center">
-        <div class="col-1 d-flex flex-column justify-content-center">
-                <img src="{{ url_for('static', filename='profile_pics/' + post.author.profile_photo) }}" alt="mdo"
-                    width="70" height="70" class="rounded-circle mx-auto">
-                <a href="#" class="link-body-emphasis text-decoration-none" aria-expanded="false">
+        <div class="col-1 d-flex flex-column align-items-center">
+                <img src="{{ url_for('static', filename='profile_pics/' + post.author.profile_photo) }}" alt="mdo" id="img">
+                <a href="#" class="link-body-emphasis text-center text-decoration-none" aria-expanded="false">
                     {{ post.author.username }}
                 </a>
         </div>

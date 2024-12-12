@@ -58,9 +58,19 @@ class UpdateUserForm(FlaskForm):
             
     def validate_email(self, email):
         if current_user.email != email.data:
-            user = db.session.execute(db.select(User).where(User.username==email.data)).scalar_one_or_none()
+            user = db.session.execute(db.select(User).where(User.email==email.data)).scalar_one_or_none()
             if user:
                 raise ValidationError("Email is already taken. Please try a different name.")
+
+
+class ResetRequest(FlaskForm):
+    email = EmailField("Email", validators=[DataRequired(message="Provide Email for Login."), Email(message="Please enter a valid E-mail Address")])
+    submit = SubmitField("Confirm Password")
+
+    def validate_email(self, email):
+        user = db.session.execute(db.select(User).where(User.email==email.data)).scalar_one_or_none()
+        if user is None:
+            raise ValidationError("Email is not registered. Please try again.")
 
 
 class ResetPasswordForm(FlaskForm):

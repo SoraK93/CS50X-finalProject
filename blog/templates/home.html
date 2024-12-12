@@ -1,33 +1,37 @@
 {% extends "layout.html" %}
 
 {% block header %}
-<div class="container-fluid h-75 object-fit-contain text-center border rounded" id="home-bg">
+<div class="container-fluid text-center border rounded" id="home-bg">
     <div class="home-header-bg container-fluid h-100"></div>
     <div class="container position-absolute top-50 start-50 translate-middle home-header-text">
-        {% if current_user.is_authenticated %}
-        <h1 class="fs-1">Welcome {{ current_user.username }}</h1>
+        {% if filter %}
+        <h1 class="fs-1">{{ name }} Post's</h1>
         {% else %}
-        <h1 class="fs-1">Welcome</h1>
+            {% if current_user.is_authenticated %}
+            <h1 class="fs-1">Welcome {{ current_user.username }}</h1>
+            {% else %}
+            <h1 class="fs-1">Welcome</h1>
+            {% endif %}
+            <p class="col-lg-8 mx-auto lead font-monospace">Share your experience of CS50.</p>
+            <div class=" container mx-auto rounded home-header-p-bg">
+                <p class=" home-header-p">Share your high and low times, how you recovered. What's your plan next after
+                    completing
+                    CS50? </p>
+            </div>
         {% endif %}
-        <p class="col-lg-8 mx-auto lead font-monospace">Share your experience of CS50.</p>
-        <div class=" container mx-auto rounded home-header-p-bg">
-            <p class=" home-header-p">Share your high and low times, how you recovered. What's your plan next after
-                completing
-                CS50? </p>
-        </div>
     </div>
 </div>
 {% endblock header %}
 
 {% block content %}
 <div class="container col-7 my-5">
-    {% for post in posts %}
+
+    {% for post in posts.items %}
     <div
         class="position-relative text-muted bg-body border border-dashed rounded-5 shadow py-5 mb-5 bg-body-tertiary row justify-content-md-center">
         <div class="col-auto d-flex flex-column">
-            <img src="{{ url_for('static', filename='profile_pics/' + post.author.profile_photo) }}" alt="mdo"
-                width="70" height="70" class="rounded-circle mt-4 mx-auto">
-            <a href="#" class="link-body-emphasis text-center text-decoration-none mt-3" aria-expanded="false">
+            <img src="{{ url_for('static', filename='profile_pics/' + post.author.profile_photo) }}" alt="mdo" id="img" class="mt-4 mx-auto">
+            <a href="{{ url_for('filter_post', name=post.author.username) }}" class="link-body-emphasis text-center text-decoration-none mt-3" aria-expanded="false">
                 {{ post.author.username }}
             </a>
         </div>
@@ -39,6 +43,7 @@
             <button type="button"
                 class="position-absolute top-0 end-0 p-3 m-3 btn-close bg-secondary bg-opacity-10 rounded-pill"
                 aria-label="Close" data-bs-toggle="modal" data-bs-target="#deleteModal"></button>
+            {% include "delete_modal.html" %}
             {% endif %}
             <h2 class="text-black">{{ post.title }}</h2>
             <p class="col-6 mb-4 fs-5">{{ post.description}}</p>
@@ -59,9 +64,40 @@
             </div>
         </div>
     </div>
-    {% include "delete_modal.html" %}
     {% endfor %}
 </div>
+<nav aria-label="Page navigation example">
+    <ul class="pagination pagination-lg justify-content-center">
+      <li class="page-item">
+        {% if posts.has_prev %}
+        <a class="page-link" href="{{ url_for('home', page=posts.prev_num) }}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+        {% else %}
+        <a class="page-link disabled" href="{{ url_for('home', page=posts.prev_num) }}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+        </a>
+        {% endif %}
+      </li>
+      {% for page_num in posts.iter_pages(left_edge=1, left_current=1, right_current=1, right_edge=1) %}
+      {% if page_num != posts.page %}
+      <li class="page-item"><a class="page-link" href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a></li>
+      {% else %}
+      <li class="page-item"><a class="page-link disabled" href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a></li>
+      {% endif %}
+      {% endfor %}
+      <li class="page-item">
+        {% if posts.has_next %}
+        <a class="page-link" href="{{ url_for('home', page=posts.next_num) }}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+        {% else %}
+        <a class="page-link disabled" href="{{ url_for('home', page=posts.next_num) }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+        </a>
+        {% endif %}
+      </li>
+    </ul>
+  </nav>
 
-
-{% endblock %}
+{% endblock content %}

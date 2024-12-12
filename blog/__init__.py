@@ -34,6 +34,11 @@ bcrypt = Bcrypt(app)
 # Ckeditor Initialize
 ckeditor = CKEditor(app)
 
+# Email setup
+HOST = os.environ["EMAIL_SMTP"]
+SENDER = os.environ["EMAIL_USER"]
+PASSWORD = os.environ["EMAIL_PASS"]
+
 from blog import routes
 
 with app.app_context():

@@ -1,6 +1,9 @@
+import os
+from blog import app
 from blog import db
-from flask_login import UserMixin
 from datetime import datetime
+from flask_login import UserMixin
+from itsdangerous import URLSafeTimedSerializer
 from sqlalchemy import Integer, String, Text, DateTime, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column,relationship
 
@@ -17,6 +20,25 @@ class User(db.Model, UserMixin):
     user_post = relationship("Post", back_populates="author")
     # Below line will link user table to comment table
     user_comment = relationship("Comment", back_populates="user")
+
+    def generate_reset_token(self):
+        """Creates a reset token, which will then be sent to the user through mail"""
+        serialize = URLSafeTimedSerializer(app.secret_key, salt="reset password")
+        # Variable is used to call URLSafeTimedSerializer function, which will then create a url
+        # which records its time of creation. We are using user's id to create this token
+        return serialize.dumps({"user_id": self.id})
+    
+    @staticmethod
+    def verify_reset_token(token, expire=1800):
+        """Verifies the token by checking its time of creation, salt, secret key"""
+        serialize = URLSafeTimedSerializer(app.secret_key, salt="reset password")
+        # Token received through the link should match this token here, else the result will be None.
+        try:
+            user_id = serialize.loads(token, salt="reset password", max_age=expire)["user_id"]
+        except:
+            return None
+        
+        return db.session.execute(db.select(User).where(User.id==user_id)).scalar()
 
 
 # This table stores Posts created by Users.

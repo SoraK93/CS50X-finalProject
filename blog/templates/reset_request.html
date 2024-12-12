@@ -1,0 +1,33 @@
+{%extends "layout.html" %}
+
+{% block header %} {% endblock header %}
+{% block content %}
+<div class="container col-7 my-5">
+    <div class="position-relative text-muted row justify-content-md-center">
+        <div class="col-7 mx-5">
+            <form action="" method="POST" novalidate>
+                <fieldset class="form-group">
+                    {{ form.hidden_tag() }}
+                    <legend class="bottom-border mb3 text-center">Reset Request</legend>
+
+                    <!-- Confirm Email Section -->
+                    <div class="form-group py-1">
+                        {% if form.email.errors %}
+                        {{ form.email(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.email(class="form-control form-control-lg", aria_describeby="emailHelper", placeholder="Enter your email") }}
+                        <div id="emailHelper" class="form-text">A mail will be sent to your registered email with a link for password reset.</div>
+                        {% endif %}
+                    </div>
+                    {{ form.submit(class="btn btn-primary w-100 my-1 py-2") }}
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content%}

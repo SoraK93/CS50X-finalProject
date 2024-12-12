@@ -8,8 +8,7 @@
                 <div class="d-flex text-muted row">
                     
                     <div class="col-4 d-flex flex-column align-items-start">
-                            <img src="{{ image_file }}" alt="mdo"
-                                width="120" height="120" class="rounded-circle mx-auto my-3">
+                            <img src="{{ image_file }}" alt="mdo" class="object-fit-cover rounded-circle mx-auto my-3" id="img">
                             <div class="form-group ms-4">
                                 {{ form.profile_image.label(class="text-center") }}
                                 {{ form.profile_image(class="form-control-file form-control-file-sm") }}
