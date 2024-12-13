@@ -71,18 +71,28 @@ We are using Flask-blueprint structure for this project. Since, this structure m
 Initially my target was to make a portfolio for the project, but as my research towards what and how to start my project. I decided to make a blog style diary for my final project. My biggest drive for this project came from the fact that this will require me to create a proper file structure, maintain at least a basic level of version control and implement many different languages together to create this project.
 
 ## Challenges
+This was my first time creating a flask project of this scale. During my initial research it felt like I could finish this with if I put some effort. But, that mindset quickly went away when I checked out Flask-Blueprint. It felt hard, at the very beginning I didn't even understand the purpose of \_\_init__.py and why do we need packages. All of this felt like so much extra effort.
+Due to which, I decided to spend 7-8 days understanding flask, flask-sql, flask-wtforms, blueprint, and many more libraries.
+
+My biggest challenge in this project was understanding this unique file structure which I have never seen before. Creating packages using \_\_init__.py. Using jinja templates and WTForms to such extend and trying my best to uphold D.R.Y. rule.
+
+#### Whats next?
+Next my target is to study CS50W so that I can work on web based projects much more comfortabely. Instead of looking of videos for understanding concepts, I will be able to read the documentation itself and use the knowledge from that directly. After making this final project, I know what I am lacking and what I can improve even more.
+
 
 ## Sources & Documentation used during this project
 [Flask Tutorial](https://www.youtube.com/watch?v=MwZwr5Tvyxo&list=PL-osiE80TeTs4UjLw5MM6OjgkjFeUxCYH) - Used this to learn basic of Flask using python.
 
-[Flask]()
+[Flask](https://flask.palletsprojects.com/en/stable/) - Flask Documentation
 
-[Flask-SQLAlchemy]()
+[Flask-SQLAlchemy](https://flask-sqlalchemy.readthedocs.io/en/stable/) - Used this for database
 
-[Flask-login]()
+[Flask-login](https://flask-login.readthedocs.io/en/latest/) - Used this to manage user login, sessions, logout
 
-[Flask-WTForms]()
+[Flask-WTForms](https://flask-wtf.readthedocs.io/en/1.2.x/) - Used this to create forms for web
 
-[Bcrypt]()
+[Bcrypt](https://flask-bcrypt.readthedocs.io/en/1.0.1/) - Used this to hash password
 
-[CKEditor]()
+[CKEditor](https://flask-ckeditor.readthedocs.io/en/stable/index.html) - Used this instead of \<textarea> tag which will be a much better text editor comparatively
+
+[itsDangerous](https://itsdangerous.palletsprojects.com/en/stable/concepts/) - Used this to create a one-time token url which will be used to reset password
