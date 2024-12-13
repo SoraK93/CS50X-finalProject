@@ -31,7 +31,7 @@
         class="position-relative text-muted bg-body border border-dashed rounded-5 shadow py-5 mb-5 bg-body-tertiary row justify-content-md-center">
         <div class="col-auto d-flex flex-column">
             <img src="{{ url_for('static', filename='profile_pics/' + post.author.profile_photo) }}" alt="mdo" id="img" class="mt-4 mx-auto">
-            <a href="{{ url_for('filter_post', name=post.author.username) }}" class="link-body-emphasis text-center text-decoration-none mt-3" aria-expanded="false">
+            <a href="{{ url_for('main.filter_post', name=post.author.username) }}" class="link-body-emphasis text-center text-decoration-none mt-3" aria-expanded="false">
                 {{ post.author.username }}
             </a>
         </div>
@@ -50,13 +50,13 @@
             <div class="col d-flex justify-content-end">
                 <!-- Update Button - Checks for author verification -->
                 {% if current_user.id == post.author_id %}
-                <form action="{{ url_for('update_post', post_id=post.id) }}" method="GET">
+                <form action="{{ url_for('posts.update_post', post_id=post.id) }}" method="GET">
                     <button class="btn btn-primary px-auto mb-3 mx-2" type="submit">
                         Update
                     </button>
                 </form>
                 {% endif %}
-                <form action="{{ url_for('show_post', post_id=post.id) }}" method="GET">
+                <form action="{{ url_for('posts.show_post', post_id=post.id) }}" method="GET">
                     <button class="btn btn-primary px-auto mb-3" type="submit">
                         Know More
                     </button>
@@ -70,29 +70,29 @@
     <ul class="pagination pagination-lg justify-content-center">
       <li class="page-item">
         {% if posts.has_prev %}
-        <a class="page-link" href="{{ url_for('home', page=posts.prev_num) }}" aria-label="Previous">
+        <a class="page-link" href="{{ url_for('main.home', page=posts.prev_num) }}" aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
         </a>
         {% else %}
-        <a class="page-link disabled" href="{{ url_for('home', page=posts.prev_num) }}" aria-label="Previous">
+        <a class="page-link disabled" href="{{ url_for('main.home', page=posts.prev_num) }}" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
         </a>
         {% endif %}
       </li>
       {% for page_num in posts.iter_pages(left_edge=1, left_current=1, right_current=1, right_edge=1) %}
       {% if page_num != posts.page %}
-      <li class="page-item"><a class="page-link" href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a></li>
+      <li class="page-item"><a class="page-link" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a></li>
       {% else %}
-      <li class="page-item"><a class="page-link disabled" href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a></li>
+      <li class="page-item"><a class="page-link disabled" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a></li>
       {% endif %}
       {% endfor %}
       <li class="page-item">
         {% if posts.has_next %}
-        <a class="page-link" href="{{ url_for('home', page=posts.next_num) }}" aria-label="Next">
+        <a class="page-link" href="{{ url_for('main.home', page=posts.next_num) }}" aria-label="Next">
           <span aria-hidden="true">&raquo;</span>
         </a>
         {% else %}
-        <a class="page-link disabled" href="{{ url_for('home', page=posts.next_num) }}" aria-label="Next">
+        <a class="page-link disabled" href="{{ url_for('main.home', page=posts.next_num) }}" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
         </a>
         {% endif %}

@@ -20,7 +20,7 @@
         class="position-relative text-muted bg-body border-dashed rounded-5 shadow py-5 mb-5 bg-body-tertiary row justify-content-md-center">
         <div class="col-1 d-flex flex-column align-items-center">
                 <img src="{{ url_for('static', filename='profile_pics/' + post.author.profile_photo) }}" alt="mdo" id="img">
-                <a href="{{ url_for('filter_post', name=post.author.username) }}" class="link-body-emphasis text-center text-decoration-none" aria-expanded="false">
+                <a href="{{ url_for('main.filter_post', name=post.author.username) }}" class="link-body-emphasis text-center text-decoration-none" aria-expanded="false">
                     {{ post.author.username }}
                 </a>
         </div>
@@ -40,14 +40,14 @@
 
             {% if current_user.id == post.author_id %}
             <div>
-                <form action="{{ url_for('update_post', post_id=post.id) }}" method="GET">
+                <form action="{{ url_for('posts.update_post', post_id=post.id) }}" method="GET">
                     <button class="btn btn-primary px-auto" type="submit">
                         Update
                     </button>
                 </form>
             </div>
             <div>
-                <button type="button" class="btn btn-danger px-3" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                <button type="button" class="btn btn-danger px-3 my-1" data-bs-toggle="modal" data-bs-target="#deleteModal">
                     Delete
                 </button>
             </div>

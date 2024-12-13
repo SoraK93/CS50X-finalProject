@@ -1,7 +1,6 @@
-import os
-from blog import app
 from blog import db
 from datetime import datetime
+from flask import current_app
 from flask_login import UserMixin
 from itsdangerous import URLSafeTimedSerializer
 from sqlalchemy import Integer, String, Text, DateTime, ForeignKey
@@ -23,7 +22,7 @@ class User(db.Model, UserMixin):
 
     def generate_reset_token(self):
         """Creates a reset token, which will then be sent to the user through mail"""
-        serialize = URLSafeTimedSerializer(app.secret_key, salt="reset password")
+        serialize = URLSafeTimedSerializer(current_app.config["SECRET_KEY"], salt="reset password")
         # Variable is used to call URLSafeTimedSerializer function, which will then create a url
         # which records its time of creation. We are using user's id to create this token
         return serialize.dumps({"user_id": self.id})
@@ -31,7 +30,7 @@ class User(db.Model, UserMixin):
     @staticmethod
     def verify_reset_token(token, expire=1800):
         """Verifies the token by checking its time of creation, salt, secret key"""
-        serialize = URLSafeTimedSerializer(app.secret_key, salt="reset password")
+        serialize = URLSafeTimedSerializer(current_app.config["SECRET_KEY"], salt="reset password")
         # Token received through the link should match this token here, else the result will be None.
         try:
             user_id = serialize.loads(token, salt="reset password", max_age=expire)["user_id"]

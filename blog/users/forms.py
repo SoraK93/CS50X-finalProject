@@ -1,11 +1,10 @@
 from blog import db
-from blog.models import User, Post
-from flask_ckeditor import CKEditorField
+from blog.models import User
 from flask_login import current_user
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, EmailField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, URL
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 
 
 class RegistrationForm(FlaskForm):
@@ -33,15 +32,6 @@ class LoginForm(FlaskForm):
     password = PasswordField("Password", validators=[DataRequired(message="Cannot be empty.")])
     remember = BooleanField("Remember Me")
     submit = SubmitField("Sign In")
-
-
-class CreatePostForm(FlaskForm):
-    """When registered user wants to post about something, this form is used"""
-    heading = StringField("Heading", validators=[DataRequired("Cannot have empty heading."), Length(max=50, message="Cannot be more than 50 words.")])
-    description = StringField("Description", validators=[DataRequired("Cannot post without providing description."), Length(max=240, message="Cannot be more than 240 words")])
-    post_image = StringField("Post Image URL", validators=[DataRequired("Cannot post without a URL."), URL()])
-    content = CKEditorField("Content", validators=[DataRequired("Cannot post with empty content."), Length(min=1, message="Cannot create a empty post.")])
-    submit = SubmitField("Create Post")
 
 
 class UpdateUserForm(FlaskForm):
@@ -77,8 +67,3 @@ class ResetPasswordForm(FlaskForm):
     password = PasswordField("Password", validators=[DataRequired(message="Cannot be empty.")])
     confirm_password = PasswordField("Confirm Password", validators=[DataRequired(message="Cannot be empty."), EqualTo("password", message="Must match password.")])
     submit = SubmitField("Confirm Password")
-
-
-class CommentForm(FlaskForm):
-    comment = CKEditorField("Content", validators=[DataRequired("Cannot post with empty content."), Length(min=1, message="Cannot create a empty post.")])
-    submit_comment = SubmitField("Create Post")

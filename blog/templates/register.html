@@ -8,7 +8,7 @@
     <div class="w-25 mx-auto d-flex">
         <main class="form-signin w-100 align-self-center">
             
-            <form action="/register" method="POST" novalidate>
+            <form action="" method="POST" novalidate>
                 <fieldset class="form-group">
                     <legend class="bottom-border mb3 text-center">Join Us Today</legend>
 
@@ -72,7 +72,7 @@
                     </div>
                     {{ form.submit(class="btn btn-primary w-100 my-3 py-2") }}
                     <div class="mb-3 text-body-secondary">
-                        Already a User? Please <a href="{{ url_for('login') }}">Sign In</a> here.
+                        Already a User? Please <a href="{{ url_for('users.login') }}">Sign In</a> here.
                     </div>
 
                 </fieldset>

@@ -1,14 +1,10 @@
-import os
-from dotenv import load_dotenv
+from blog.config import Config
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_ckeditor import CKEditor
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
-
-# Loads .env file
-load_dotenv()
 
 
 # Database Initialize
@@ -18,28 +14,32 @@ class Base(DeclarativeBase):
 
 db = SQLAlchemy(model_class=Base)
 
-# Flask app Initialize
-app = Flask(__name__)
-app.secret_key = os.environ["SECRET_KEY"]
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["SQLALCHEMY_DATABASE_URI"]
-db.__init__(app)
-
-# Login Manager Initialize
+bcrypt = Bcrypt()
+ckeditor = CKEditor()
 login_manager = LoginManager()
-login_manager.__init__(app)
+login_manager.login_view = "user.login"
+login_manager.login_message_category = "info"
 
-# Bcrypt Initialize
-bcrypt = Bcrypt(app)
 
-# Ckeditor Initialize
-ckeditor = CKEditor(app)
+def create_app(config_class=Config):
+    # Flask app
+    app = Flask(__name__)
+    app.config.from_object(Config)
 
-# Email setup
-HOST = os.environ["EMAIL_SMTP"]
-SENDER = os.environ["EMAIL_USER"]
-PASSWORD = os.environ["EMAIL_PASS"]
+    # Bcrypt Initialize
+    bcrypt.__init__(app)
+    ckeditor.__init__(app)
+    db.__init__(app)
+    login_manager.__init__(app)
+    
+    from blog.main.routes import main
+    from blog.users.routes import users
+    from blog.posts.routes import posts
+    app.register_blueprint(main)
+    app.register_blueprint(users)
+    app.register_blueprint(posts)
 
-from blog import routes
+    with app.app_context():
+        db.create_all()
 
-with app.app_context():
-    db.create_all()
+    return app

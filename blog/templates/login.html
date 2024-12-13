@@ -47,10 +47,10 @@
                     </div>
                     {{ form.submit(class="btn btn-primary w-100 py-2") }}
                     <div class="mt-3 mb-3 text-body-secondary">
-                        New User? Please <a href="{{ url_for('register') }}">Sign Up</a> here.
+                        New User? Please <a href="{{ url_for('users.register') }}">Sign Up</a> here.
                     </div>
                     <div class="mt-3 mb-3 text-body-secondary">
-                        Can't Login? Click to <a href="{{ url_for('reset_request') }}">reset password</a>.
+                        Can't Login? Click to <a href="{{ url_for('users.reset_request') }}">reset password</a>.
                     </div>
                 </fieldset>
             </form>
