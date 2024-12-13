@@ -1,8 +1,8 @@
 import os
 import secrets
 from blog import app, bcrypt, db, login_manager, SENDER, HOST, PASSWORD
-from blog.forms import RegistrationForm, LoginForm, CreatePostForm, UpdateUserForm, ResetPasswordForm, ResetRequest
-from blog.models import User, Post
+from blog.forms import RegistrationForm, LoginForm, CreatePostForm, UpdateUserForm, ResetPasswordForm, ResetRequest, CommentForm
+from blog.models import User, Post, Comment
 from flask import flash, render_template, redirect, request, url_for, abort, current_app
 from flask_login import login_required, login_user, logout_user, current_user
 from flask_wtf.form import Form
@@ -136,13 +136,25 @@ def delete_post(post_id):
 	return redirect(url_for("home"))
 
 
-@app.route("/show_post/<int:post_id>")
+@app.route("/show_post/<int:post_id>", methods=["GET", "POST"])
 def show_post(post_id):
 	post = db.session.execute(db.select(Post).where(Post.id==post_id)).scalar()
 	if not post:
 		flash("Invalid input provided.", "warning")
 		return redirect(url_for("home"))
-	return render_template("post.html", post=post, date=post.date_posted.strftime("%Y-%m-%d"))
+	form = CommentForm()
+	comment_page = request.args.get("page", 1, type=int)
+	comments = db.paginate(db.select(Comment).where(Comment.post_id==post_id), page=comment_page, per_page=5)
+	if form.validate_on_submit():
+		new_comment = Comment(
+			description=form.comment.data,
+			user=current_user,
+			feedback=post
+		)
+		db.session.add(new_comment)
+		db.session.commit()
+		return redirect(url_for("show_post", post_id=post.id))
+	return render_template("post.html", post=post, date=post.date_posted.strftime("%Y-%m-%d"), form=form, comments=comments)
 
 
 def save_profile_pictures(profile_picture):

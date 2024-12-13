@@ -1,0 +1,85 @@
+<!-- Comment form -->
+<div class="container w-50">
+    <div class="position-relative text-muted">
+        <div class="w-50 mx-auto d-flex flex-column">
+            <main class="form-signin align-self-center">
+                <form action="" method="POST" novalidate>
+                    <fieldset class="form-group">
+                        {{ form.hidden_tag() }}
+                        <legend class="bottom-border text-center">Comments</legend>
+
+                        <!-- Content Section -->
+                        <div class="form-group">
+                            {{ form.comment(class_="form-control") }}
+                        </div>
+                        {{ form.submit_comment(class_="btn btn-primary w-100 py-1 mt-1", value="Submit") }}
+                    </fieldset>
+                </form>
+                {{ ckeditor.load() }}
+                {{ ckeditor.config(name="content", height=100) }}
+            </main>
+        </div>
+    </div>
+</div>
+
+{% if comments.total != 0%}
+<div class="container col-7 my-5">
+    <div
+        class="position-relative text-muted bg-body border border-dashed rounded-5 shadow py-2 mb-5 bg-body-tertiary row justify-content-md-center">
+
+        {% for comment in comments %}
+        <div class="col-5 d-flex flex-column">
+            <img src="{{ url_for('static', filename='profile_pics/' + comment.user.profile_photo) }}" alt="mdo" id="comment_img"
+                class="mx-auto">
+            <a href="{{ url_for('filter_post', name=comment.user.username) }}"
+                class="link-body-emphasis text-center text-decoration-none" aria-expanded="false">
+                {{ comment.user.username }}
+            </a>
+        </div>
+
+        <div class="col-7">
+            <p class="fs-3">{{ comment.description|safe }}</p>
+        </div>
+        <hr class="w-75">
+        <br>
+        {% endfor %}
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+              <li class="page-item">
+                {% if comments.has_prev %}
+                <a class="page-link" href="{{ url_for('show_post', post_id=post.id, page=comments.prev_num) }}" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+                {% else %}
+                <a class="page-link disabled" href="{{ url_for('show_post', post_id=post.id, page=comments.prev_num) }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+                {% endif %}
+              </li>
+              {% for page_num in comments.iter_pages(left_edge=1, left_current=1, right_current=1, right_edge=1) %}
+              {% if page_num != comments.page %}
+              <li class="page-item"><a class="page-link" href="{{ url_for('show_post', post_id=post.id, page=page_num) }}">{{ page_num }}</a></li>
+              {% else %}
+              <li class="page-item"><a class="page-link disabled" href="{{ url_for('show_post', post_id=post.id, page=page_num) }}">{{ page_num }}</a></li>
+              {% endif %}
+              {% endfor %}
+              <li class="page-item">
+                {% if comments.has_next %}
+                <a class="page-link" href="{{ url_for('show_post', post_id=post.id, page=comments.next_num) }}" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+                {% else %}
+                <a class="page-link disabled" href="{{ url_for('show_post', post_id=post.id, page=comments.next_num) }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+                {% endif %}
+              </li>
+            </ul>
+          </nav>
+    </div>
+</div>
+{% endif %}
+
+<div class="container my-5"></div>
+</div>

@@ -50,6 +50,14 @@ body {
     border-radius: 50%;
 }
 
+/* Comment */
+#comment_img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
 /* Home Page */
 #home-bg {
     background-image: url(../static/home.avif);

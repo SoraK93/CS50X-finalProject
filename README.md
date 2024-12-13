@@ -1,6 +1,6 @@
 # CS50 Diary
 ## Video Demo:  <URL HERE>
-### Description:
+## Description:
 The idea for this diary came from my need for a central/ common space for all the course mates to interact with each other whether they are pursuing online or on-site course, whether they are new or old to CS in general. Yes, we have ways to form study groups, but they do not meet my needs. What I wanted was something akin to how we can interact with anyone in the classroom chat and have an in-depth discussion on topics that interest us and at the same time it can also be a place where we share our troubles (not asking for a direct solutions).
 
 **Main purpose of this diary is _sharing and interacting_** (Obviously not sharing answers to P-Set which will defeat the purpose of the course).  
@@ -20,7 +20,44 @@ To fulfil this goal, I decided to create a web-app which can be used to share ou
 + If clicked on username on the post, app will filter out all the posts related to that user.
 
 
-### Explain each files
+## Explain each files
+#### <ins>**Tree model of the Project:**</ins>
++ Project
+    + blog
+        + comments
+            + __init__.py
+        + main
+            + __init__.py
+        + posts
+            + __init__.py
+        + users
+            + __init__.py
+        + static
+            + profile_pics
+            + image files
+            + style.css
+        + templates
+            + about.html
+            + contact.html
+            + create_post.html
+            + delete_modal.html
+            + home.html
+            + layout.html
+            + login.html
+            + post.html
+            + profile.html
+            + register.html
+            + reseet_password.html
+            + reset_request.html
+            + user.html
+        + models.py
+        + config.py
+        + routes.py
+        + forms.py
+    + instance
+        + sqlite.db
+    + .gitignore
+    + run.py
 
 
 
@@ -29,12 +66,11 @@ To fulfil this goal, I decided to create a web-app which can be used to share ou
 
 
 
+## Initial project goals and changes
 
-### Initial project goals and changes
+## Challenges
 
-### Challenges
-
-### Sources & Documentation used during this project
+## Sources & Documentation used during this project
 [Flask Tutorial](https://www.youtube.com/watch?v=MwZwr5Tvyxo&list=PL-osiE80TeTs4UjLw5MM6OjgkjFeUxCYH) - Used this to learn basic of Flask using python.
 
 [Flask]()

@@ -77,3 +77,8 @@ class ResetPasswordForm(FlaskForm):
     password = PasswordField("Password", validators=[DataRequired(message="Cannot be empty.")])
     confirm_password = PasswordField("Confirm Password", validators=[DataRequired(message="Cannot be empty."), EqualTo("password", message="Must match password.")])
     submit = SubmitField("Confirm Password")
+
+
+class CommentForm(FlaskForm):
+    comment = CKEditorField("Content", validators=[DataRequired("Cannot post with empty content."), Length(min=1, message="Cannot create a empty post.")])
+    submit_comment = SubmitField("Create Post")
